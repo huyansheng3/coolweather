@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.example.fengmanlou.coolweather.db.CoolWeatherDB;
 import com.example.fengmanlou.coolweather.model.City;
@@ -21,6 +22,8 @@ import java.util.Locale;
  * Created by fengmanlou on 2015/3/30.
  */
 public class Utility {
+
+    public static final String TAG = "WeatherActivity";
     /**
      * 解析和处理服务器返回的省级数据
      */

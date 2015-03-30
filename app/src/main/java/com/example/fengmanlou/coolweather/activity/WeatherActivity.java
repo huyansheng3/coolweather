@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -54,6 +55,9 @@ private TextView cityNameText;
      * 更新天气按钮
      */
     private Button refreshWeather;
+
+
+    public static final String TAG = "WeatherActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +74,8 @@ private TextView cityNameText;
         switchCity = (Button) findViewById(R.id.switch_city);
         refreshWeather = (Button) findViewById(R.id.refresh_weather);
         String countyCode = getIntent().getStringExtra("county_code");
+        Log.i(TAG,"countyCode--->"+countyCode);
+      /*  String countyCode = "101010100";*/
         if (!TextUtils.isEmpty(countyCode)) {
 // 有县级代号时就去查询天气
             publishText.setText("同步中...");
@@ -115,7 +121,8 @@ private TextView cityNameText;
      * 查询天气代号所对应的天气。
      */
     private void queryWeatherInfo(String weatherCode) {
-        String address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
+        //String address = "http://www.weather.com.cn/adta/cityinfo/" + weatherCode + ".html";
+        String address = "http://www.weather.com.cn/adat/cityinfo/"+weatherCode+".html";
         queryFromServer(address, "weatherCode");
     }
     /**
@@ -131,12 +138,15 @@ private TextView cityNameText;
                         String[] array = response.split("\\|");
                         if (array != null && array.length == 2) {
                             String weatherCode = array[1];
+                            Log.i(TAG,"countyCode-->"+array[0]);
+                            Log.i(TAG,"weatherCode-->"+weatherCode);
                             queryWeatherInfo(weatherCode);
                         }
                     }
                 } else if ("weatherCode".equals(type)) {
                     // 处理服务器返回的天气信息
                     Utility.handleWeatherResponse(WeatherActivity.this, response);
+                    Log.i(TAG,"response----->"+response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -163,6 +173,8 @@ private TextView cityNameText;
      */
     private void showWeather() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.i(TAG,"prefs--->"+prefs.getString("city_name", ""));
+
         cityNameText.setText(prefs.getString("city_name", ""));
         temp1Text.setText(prefs.getString("temp1", ""));
         temp2Text.setText(prefs.getString("temp2", ""));
