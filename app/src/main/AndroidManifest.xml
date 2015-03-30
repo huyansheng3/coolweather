@@ -20,6 +20,10 @@
         </activity>
 
         <activity android:name="com.example.fengmanlou.coolweather.activity.WeatherActivity"></activity>
+
+        <service android:name="com.example.fengmanlou.coolweather.service.AutoUpdateService"></service>
+        <receiver android:name="com.example.fengmanlou.coolweather.receiver.AutoUpdateReceiver"></receiver>
+
     </application>
 
 </manifest>

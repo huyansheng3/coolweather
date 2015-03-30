@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.fengmanlou.coolweather.R;
+import com.example.fengmanlou.coolweather.service.AutoUpdateService;
 import com.example.fengmanlou.coolweather.util.HttpCallbackListener;
 import com.example.fengmanlou.coolweather.util.HttpUtil;
 import com.example.fengmanlou.coolweather.util.Utility;
@@ -183,5 +184,7 @@ private TextView cityNameText;
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
